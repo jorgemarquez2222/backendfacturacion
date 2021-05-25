@@ -15,6 +15,7 @@ router.get("/products", async function (req, res, next) {
         "precio_paca_dolar",
         "cantidad_por_paca",
         "porcentaje_ganancia",
+        "cantidad"
       ],
       raw: true,
     });
