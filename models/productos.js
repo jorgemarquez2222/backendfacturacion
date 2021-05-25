@@ -6,14 +6,15 @@ const Productos = db.sequelize.define('productos', {
     type: DataTypes.NUMBER,
     allowNull: false,
     primaryKey: true,
+    autoIncrement: true,
   },
   nombre: { type: DataTypes.STRING },
   id_rubro: {type: DataTypes.NUMBER},
   entrada: {type: DataTypes.FLOAT},
   salida: {type: DataTypes.FLOAT},
-  precio_venta: {type: DataTypes.FLOAT},
-  precio_compra: {type: DataTypes.FLOAT},
-  precio: {type: DataTypes.FLOAT},
+  precio_paca_dolar: {type: DataTypes.FLOAT},
+  cantidad_por_paca: {type: DataTypes.FLOAT},
+  porcentaje_ganancia: {type: DataTypes.FLOAT},
 });
 
 module.exports = {
