@@ -15,6 +15,7 @@ const Productos = db.sequelize.define('productos', {
   precio_paca_dolar: {type: DataTypes.FLOAT},
   cantidad_por_paca: {type: DataTypes.FLOAT},
   porcentaje_ganancia: {type: DataTypes.FLOAT},
+  cantidad: {type: DataTypes.NUMBER},
 });
 
 module.exports = {
