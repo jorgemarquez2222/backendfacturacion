@@ -131,7 +131,7 @@ router.get("/preciosEfectPunto", async function (req, res, next) {
     const r = await db.sequelize.authenticate();
     console.log("Conectado", r);
 
-    const resp = await PreciosEfectPunto.findAll({
+    const [resp] = await PreciosEfectPunto.findAll({
       attributes: ["id_precio_efect_punto", "precio_efect", "precio_punto"],
       raw: true,
     });
