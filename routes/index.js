@@ -14,8 +14,10 @@ router.get("/products", async function (req, res, next) {
         "nombre",
         "precio_paca_dolar",
         "cantidad_por_paca",
-        "porcentaje_ganancia",
-        "cantidad"
+        "porcent_dolar",
+        "porcent_efect",
+        "porcent_punto",
+        "cantidad",
       ],
       raw: true,
     });
@@ -29,19 +31,21 @@ router.get("/products", async function (req, res, next) {
 router.post("/product", async function (req, res, next) {
   try {
     const r = await db.sequelize.authenticate();
-    console.log("Conectado", r);
-    console.log("req", req.body);
     const {
       nombre,
       precio_paca_dolar,
       cantidad_por_paca,
-      porcentaje_ganancia,
+      porcent_dolar,
+      porcent_efect,
+      porcent_punto,
     } = req.body;
     const products = await Productos.create({
       nombre,
       precio_paca_dolar,
       cantidad_por_paca,
-      porcentaje_ganancia,
+      porcent_dolar,
+      porcent_efect,
+      porcent_punto,
     });
     res.json({ products });
   } catch (e) {
@@ -60,14 +64,18 @@ router.put("/product/", async function (req, res, next) {
       nombre,
       precio_paca_dolar,
       cantidad_por_paca,
-      porcentaje_ganancia,
+      porcent_dolar,
+      porcent_efect,
+      porcent_punto,
     } = req.body;
     const products = await Productos.update(
       {
         nombre,
         precio_paca_dolar,
         cantidad_por_paca,
-        porcentaje_ganancia,
+        porcent_dolar,
+        porcent_efect,
+        porcent_punto,
       },
       {
         where: {
@@ -87,13 +95,12 @@ router.delete("/product/:id", async function (req, res, next) {
     const r = await db.sequelize.authenticate();
     console.log("Conectado", r);
     console.log("req", req.params.id_producto);
-   
+
     const products = await Productos.destroy({
-        where: {
-          id_producto: parseInt(req.body.id_producto),
-        },
-      }
-    );
+      where: {
+        id_producto: parseInt(req.body.id_producto),
+      },
+    });
     res.json({ products });
   } catch (e) {
     console.log("No conectado");
