@@ -20,6 +20,18 @@ const Productos = db.sequelize.define('productos', {
   cantidad: {type: DataTypes.NUMBER},
 });
 
+const PreciosEfectPunto = db.sequelize.define('efect_punto_precios', {
+  id_precio_efect_punto: {
+    type: DataTypes.NUMBER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  precio_efect: { type: DataTypes.STRING },
+  precio_punto: {type: DataTypes.NUMBER},
+});
+
 module.exports = {
-  Productos
+  Productos,
+  PreciosEfectPunto
 }

@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const db = require("../config/database");
-const { Productos } = require("../models/productos");
+const { Productos, PreciosEfectPunto } = require("../models/productos");
 
 router.get("/products", async function (req, res, next) {
   try {
@@ -107,4 +107,64 @@ router.delete("/product/:id", async function (req, res, next) {
     console.log(e.stack);
   }
 });
+
+router.delete("/product/:id", async function (req, res, next) {
+  try {
+    const r = await db.sequelize.authenticate();
+    console.log("Conectado", r);
+    console.log("req", req.params.id_producto);
+
+    const products = await Productos.destroy({
+      where: {
+        id_producto: parseInt(req.body.id_producto),
+      },
+    });
+    res.json({ products });
+  } catch (e) {
+    console.log("No conectado");
+    console.log(e.stack);
+  }
+});
+
+router.get("/preciosEfectPunto", async function (req, res, next) {
+  try {
+    const r = await db.sequelize.authenticate();
+    console.log("Conectado", r);
+
+    const resp = await PreciosEfectPunto.findAll({
+      attributes: ["id_precio_efect_punto", "precio_efect", "precio_punto"],
+      raw: true,
+    });
+    res.status(200).json({ resp });
+  } catch (e) {
+    console.log("No conectado");
+    console.log(e.stack);
+  }
+});
+
+router.put("/preciosEfectPunto/", async function (req, res, next) {
+  try {
+    const r = await db.sequelize.authenticate();
+    console.log("Conectado", r);
+    console.log("req", req.body);
+
+    const { id_precio_efect_punto, precio_efect, precio_punto } = req.body;
+    const resp = await PreciosEfectPunto.update(
+      {
+        precio_efect, 
+        precio_punto      
+      },
+      {
+        where: {
+          id_precio_efect_punto: parseInt(id_precio_efect_punto),
+        },
+      }
+    );
+    res.json({ resp });
+  } catch (e) {
+    console.log("No conectado");
+    console.log(e.stack);
+  }
+});
+
 module.exports = router;
