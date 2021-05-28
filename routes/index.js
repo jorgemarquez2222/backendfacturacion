@@ -54,7 +54,7 @@ router.post("/product", async function (req, res, next) {
   }
 });
 
-router.put("/product/", async function (req, res, next) {
+router.put("/product/:id", async function (req, res, next) {
   try {
     const r = await db.sequelize.authenticate();
     console.log("Conectado", r);
@@ -79,7 +79,7 @@ router.put("/product/", async function (req, res, next) {
       },
       {
         where: {
-          id_producto: parseInt(req.body.id_producto),
+          id_producto: parseInt(req.params.id),
         },
       }
     );
