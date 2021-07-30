@@ -3,9 +3,17 @@ var router = express.Router();
 const db = require("../config/database");
 const { Productos, PreciosEfectPunto } = require("../models/productos");
 
+const searProductName = async (name) => {
+  const product = await Productos.findAll({ where: {
+    nombre: name
+  }})
+  if(!product.length) return false
+  return true
+}
+
 router.get("/products", async function (req, res, next) {
   try {
-    const r = await db.sequelize.authenticate();
+    const conn = await db.sequelize.authenticate();
     console.log("Conectado", r);
 
     const products = await Productos.findAll({
@@ -30,7 +38,7 @@ router.get("/products", async function (req, res, next) {
 
 router.post("/product", async function (req, res, next) {
   try {
-    const r = await db.sequelize.authenticate();
+    const conn = await db.sequelize.authenticate();
     const {
       nombre,
       precio_paca_dolar,
@@ -39,6 +47,12 @@ router.post("/product", async function (req, res, next) {
       porcent_efect,
       porcent_punto,
     } = req.body;
+    const existProduct = await searProductName(nombre)
+    if(existProduct){
+      res.status(409).json({ products:[] });
+      return
+    }
+    console.log("existProduct", existProduct)
     const products = await Productos.create({
       nombre,
       precio_paca_dolar,
@@ -56,7 +70,7 @@ router.post("/product", async function (req, res, next) {
 
 router.put("/product/:id", async function (req, res, next) {
   try {
-    const r = await db.sequelize.authenticate();
+    const conn = await db.sequelize.authenticate();
     console.log("Conectado", r);
     console.log("req", req.body);
 
@@ -92,7 +106,7 @@ router.put("/product/:id", async function (req, res, next) {
 
 router.delete("/product/:id", async function (req, res, next) {
   try {
-    const r = await db.sequelize.authenticate();
+    const conn = await db.sequelize.authenticate();
     console.log("Conectado", r);
     console.log("req", req.params.id_producto);
 
@@ -110,7 +124,7 @@ router.delete("/product/:id", async function (req, res, next) {
 
 router.delete("/product/:id", async function (req, res, next) {
   try {
-    const r = await db.sequelize.authenticate();
+    const conn = await db.sequelize.authenticate();
     console.log("Conectado", r);
     console.log("req", req.params.id_producto);
 
@@ -128,7 +142,7 @@ router.delete("/product/:id", async function (req, res, next) {
 
 router.get("/preciosEfectPunto", async function (req, res, next) {
   try {
-    const r = await db.sequelize.authenticate();
+    const conn = await db.sequelize.authenticate();
     console.log("Conectado", r);
 
     const [resp] = await PreciosEfectPunto.findAll({
@@ -144,7 +158,7 @@ router.get("/preciosEfectPunto", async function (req, res, next) {
 
 router.put("/preciosEfectPunto/", async function (req, res, next) {
   try {
-    const r = await db.sequelize.authenticate();
+    const conn = await db.sequelize.authenticate();
     console.log("Conectado", r);
     console.log("req", req.body);
 
