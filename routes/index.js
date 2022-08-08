@@ -14,7 +14,6 @@ const searProductName = async (name) => {
 router.get("/products", async function (req, res, next) {
   try {
     const conn = await db.sequelize.authenticate();
-    console.log("Conectado", r);
 
     const products = await Productos.findAll({
       attributes: [
@@ -107,12 +106,11 @@ router.put("/product/:id", async function (req, res, next) {
 router.delete("/product/:id", async function (req, res, next) {
   try {
     const conn = await db.sequelize.authenticate();
-    console.log("Conectado", r);
-    console.log("req", req.params.id_producto);
+    console.log("req", req.params);
 
     const products = await Productos.destroy({
       where: {
-        id_producto: parseInt(req.body.id_producto),
+        id_producto: parseInt(req.params.id),
       },
     });
     res.json({ products });
@@ -143,7 +141,6 @@ router.delete("/product/:id", async function (req, res, next) {
 router.get("/preciosEfectPunto", async function (req, res, next) {
   try {
     const conn = await db.sequelize.authenticate();
-    console.log("Conectado", r);
 
     const [resp] = await PreciosEfectPunto.findAll({
       attributes: ["id_precio_efect_punto", "precio_efect", "precio_punto"],
