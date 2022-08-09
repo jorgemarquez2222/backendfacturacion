@@ -70,7 +70,6 @@ router.post("/product", async function (req, res, next) {
 router.put("/product/:id", async function (req, res, next) {
   try {
     const conn = await db.sequelize.authenticate();
-    console.log("Conectado", r);
     console.log("req", req.body);
 
     const {
@@ -123,7 +122,6 @@ router.delete("/product/:id", async function (req, res, next) {
 router.delete("/product/:id", async function (req, res, next) {
   try {
     const conn = await db.sequelize.authenticate();
-    console.log("Conectado", r);
     console.log("req", req.params.id_producto);
 
     const products = await Productos.destroy({
@@ -156,7 +154,6 @@ router.get("/preciosEfectPunto", async function (req, res, next) {
 router.put("/preciosEfectPunto/", async function (req, res, next) {
   try {
     const conn = await db.sequelize.authenticate();
-    console.log("Conectado", r);
     console.log("req", req.body);
 
     const { id_precio_efect_punto, precio_efect, precio_punto } = req.body;
